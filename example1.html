@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faktöriyel Hesaplama</title>
+</head>
+<body>
+
+  <h1>Faktöriyel Hesaplama</h1>
+
+  <label for="numberInput">Bir sayı girin:</label>
+  <input type="number" id="numberInput">
+  <button onclick="calculateFactorial()">Faktöriyel Hesapla</button>
+
+  <p id="result"></p>
+
+  <script>
+    function calculateFactorial() {
+      // Kullanıcının girdiği sayıyı al
+      var inputNumber = document.getElementById("numberInput").value;
+
+      // Girişin bir sayı olup olmadığını kontrol et
+      if (isNaN(inputNumber)) {
+        alert("Lütfen bir sayı girin.");
+        return;
+      }
+
+      // Faktöriyel hesapla
+      var result = 1;
+      for (var i = 1; i <= inputNumber; i++) {
+        result *= i;
+      }
+
+      // Sonucu ekrana yazdır
+      document.getElementById("result").innerHTML = "Faktöriyel: " + result;
+    }
+  </script>
+
+</body>
+</html>

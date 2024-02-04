@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>En Sık Geçen Kelime Bulma</title>
+</head>
+<body>
+
+  <h1>En Sık Geçen Kelime Bulma</h1>
+
+  <label for="textInput">Metin girin:</label>
+  <textarea id="textInput" rows="4" cols="50"></textarea>
+  <button onclick="findMostFrequentWord()">En Sık Geçen Kelimeyi Bul</button>
+
+  <p id="result"></p>
+
+  <script>
+    function findMostFrequentWord() {
+      // Kullanıcının girdiği metni al
+      var inputText = document.getElementById("textInput").value;
+
+      // Girişin boş olup olmadığını kontrol et
+      if (inputText.trim() === "") {
+        alert("Lütfen bir metin girin.");
+        return;
+      }
+
+      // Metni kelimelere ayır
+      var wordsArray = inputText.toLowerCase().match(/\b\w+\b/g);
+
+      // Kelimeleri say
+      var wordCount = {};
+      wordsArray.forEach(function(word) {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // En sık geçen kelimeyi bul
+      var mostFrequentWord = Object.keys(wordCount).reduce(function(a, b) {
+        return wordCount[a] > wordCount[b] ? a : b;
+      });
+
+      // Sonucu ekrana yazdır
+      document.getElementById("result").innerHTML = "En sık geçen kelime: '" + mostFrequentWord + "' (" + wordCount[mostFrequentWord] + " kez)";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitap Yönetim Sistemi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #bookList {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Kitap Yönetim Sistemi</h1>
+
+  <label for="titleInput">Kitap Adı:</label>
+  <input type="text" id="titleInput">
+
+  <label for="pageInput">Sayfa Sayısı:</label>
+  <input type="number" id="pageInput">
+
+  <button onclick="addBook()">Kitap Ekle</button>
+
+  <h2>Kitap Listesi</h2>
+  <ul id="bookList"></ul>
+
+  <h2>Toplam Sayfa Sayısı</h2>
+  <p id="totalPages">0</p>
+
+  <script>
+    var books = [];
+
+    function addBook() {
+      var title = document.getElementById("titleInput").value;
+      var pages = parseInt(document.getElementById("pageInput").value);
+
+      if (title.trim() === "" || isNaN(pages) || pages <= 0) {
+        alert("Lütfen geçerli bir kitap adı ve sayfa sayısı girin.");
+        return;
+      }
+
+      var book = { title: title, pages: pages };
+      books.push(book);
+
+      updateBookList();
+      updateTotalPages();
+      clearInputs();
+    }
+
+    function updateBookList() {
+      var bookList = document.getElementById("bookList");
+      bookList.innerHTML = "";
+
+      books.forEach(function(book) {
+        var listItem = document.createElement("li");
+        listItem.textContent = book.title + " - " + book.pages + " sayfa";
+        bookList.appendChild(listItem);
+      });
+    }
+
+    function updateTotalPages() {
+      var totalPages = books.reduce(function(sum, book) {
+        return sum + book.pages;
+      }, 0);
+
+      document.getElementById("totalPages").textContent = totalPages;
+    }
+
+    function clearInputs() {
+      document.getElementById("titleInput").value = "";
+      document.getElementById("pageInput").value = "";
+    }
+  </script>
+
+</body>
+</html>

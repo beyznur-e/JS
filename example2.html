@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ortalama Hesaplama</title>
+</head>
+<body>
+
+  <h1>Ortalama Hesaplama</h1>
+
+  <label for="numbersInput">Sayıları aralarına virgül koyarak girin:</label>
+  <input type="text" id="numbersInput">
+  <button onclick="calculateAverage()">Ortalama Hesapla</button>
+
+  <p id="result"></p>
+
+  <script>
+    function calculateAverage() {
+      // Kullanıcının girdiği sayıları al
+      var inputNumbers = document.getElementById("numbersInput").value;
+
+      // Girişin bir sayı olup olmadığını kontrol et
+      var numbersArray = inputNumbers.split(',').map(Number);
+      if (numbersArray.some(isNaN)) {
+        alert("Lütfen geçerli sayıları virgülle ayırarak girin.");
+        return;
+      }
+
+      // Sayıların ortalamasını hesapla
+      var sum = numbersArray.reduce((acc, num) => acc + num, 0);
+      var average = sum / numbersArray.length;
+
+      // Sonucu ekrana yazdır
+      document.getElementById("result").innerHTML = "Ortalama: " + average.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>

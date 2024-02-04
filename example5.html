@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitap Yönetim Sistemi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 400px;
+    }
+
+    #header {
+      background-color: #2196F3;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #bookList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .bookItem {
+      border-bottom: 1px solid #eee;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bookItem button {
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    #totalPages {
+      background-color: #2196F3;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    #addBookForm {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #addBookForm input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #addBookForm button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <div id="header">
+      <h1>Kitap Yönetim Sistemi</h1>
+    </div>
+
+    <div id="addBookForm">
+      <label for="titleInput">Kitap Adı:</label>
+      <input type="text" id="titleInput" placeholder="Kitap adını girin">
+
+      <label for="pageInput">Sayfa Sayısı:</label>
+      <input type="number" id="pageInput" placeholder="Sayfa sayısını girin">
+
+      <button onclick="addBook()">Kitap Ekle</button>
+    </div>
+
+    <h2>Kitap Listesi</h2>
+    <ul id="bookList"></ul>
+
+    <h2 id="totalPages">Toplam Sayfa Sayısı: 0</h2>
+  </div>
+
+  <script>
+    var books = [];
+
+    function addBook() {
+      var title = document.getElementById("titleInput").value;
+      var pages = parseInt(document.getElementById("pageInput").value);
+
+      if (title.trim() === "" || isNaN(pages) || pages <= 0) {
+        alert("Lütfen geçerli bir kitap adı ve sayfa sayısı girin.");
+        return;
+      }
+
+      var book = { title: title, pages: pages };
+      books.push(book);
+
+      updateBookList();
+      updateTotalPages();
+      clearInputs();
+    }
+
+    function removeBook(index) {
+      books.splice(index, 1);
+      updateBookList();
+      updateTotalPages();
+    }
+
+    function updateBookList() {
+      var bookList = document.getElementById("bookList");
+      bookList.innerHTML = "";
+
+      books.forEach(function(book, index) {
+        var listItem = document.createElement("li");
+        listItem.className = "bookItem";
+        listItem.innerHTML = `<span>${book.title} - ${book.pages} sayfa</span><button onclick="removeBook(${index})">Sil</button>`;
+        bookList.appendChild(listItem);
+      });
+    }
+
+    function updateTotalPages() {
+      var totalPages = books.reduce(function(sum, book) {
+        return sum + book.pages;
+      }, 0);
+
+      document.getElementById("totalPages").textContent = "Toplam Sayfa Sayısı: " + totalPages;
+    }
+
+    function clearInputs() {
+      document.getElementById("titleInput").value = "";
+      document.getElementById("pageInput").value = "";
+    }
+  </script>
+
+</body>
+</html>
